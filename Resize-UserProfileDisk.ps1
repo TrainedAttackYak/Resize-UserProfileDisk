@@ -313,7 +313,7 @@ function Resize-UserProfileDisk {
                 try {
                     Write-Log -severity Information -message " "
                     Write-Log -severity Information -message "Defrag: Try to mount VHDX-file $vhdx..."
-                    $MountResult = Mount-DiskImage $vhdx
+                    $MountResult = Mount-DiskImage $vhdx -PassThru
                     Start-Sleep -Seconds 15
                     Write-Log -severity Information -message "Defrag: Try to mount VHDX-file $vhdx... Done"
                 }
@@ -326,7 +326,7 @@ function Resize-UserProfileDisk {
 
                 try {
                     Write-Log -severity Information -message "Defrag: Checking for driveletter mounted $vhdx..." 
-                    $DriveLetter = ($MountResult | Get-Disk | Get-Partition).DriveLetter
+                    $DriveLetter = (Get-DiskImage -ImagePath $vhdx| Get-Disk | Get-Partition | Get-Volume).DriveLetter
                     Write-Log -severity Information -message "Defrag: Checking for driveletter mounted $vhdx... Done. Detected driveletter: $Driveletter"
                 } 
                 Catch {
@@ -390,7 +390,7 @@ function Resize-UserProfileDisk {
                 try {
                     Write-Log -severity Information -message " "
                     Write-Log -severity Information -message "SDelete: Try to mount VHDX-file $vhdx..."
-                    $MountResult = Mount-DiskImage $vhdx
+                    $MountResult = Mount-DiskImage $vhdx -PassThru
                     Start-Sleep -Seconds 7
                     Write-Log -severity Information -message "SDelete: Try to mount VHDX-file $vhdx... Done"
                 }
@@ -402,7 +402,7 @@ function Resize-UserProfileDisk {
                 }
 
                 try {
-                    $DriveLetter = ($MountResult | Get-Disk | Get-Partition).DriveLetter
+                    $DriveLetter = (Get-DiskImage -ImagePath $vhdx| Get-Disk | Get-Partition | Get-Volume).DriveLetter
                     Write-Log -severity Information -message "SDelete: Checking for driveletter mounted $vhdx..." 
                     Write-Log -severity Information -message "SDelete: Checking for driveletter mounted $vhdx... Done. Detected driveletter: $Driveletter"
                 } 
